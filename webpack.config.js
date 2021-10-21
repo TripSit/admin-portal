@@ -34,12 +34,12 @@ const base = {
         test: /\.css$/,
         use: [
           MiniCssExtract.loader,
-          'css-loader',
+          require.resolve('css-loader'),
         ],
       },
       {
         test: /\.(png|jpe?g|svg)$/,
-        use: 'file-loader',
+        use: require.resolve('file-loader'),
       },
     ],
   },

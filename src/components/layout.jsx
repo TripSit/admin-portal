@@ -4,6 +4,16 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { Navbar, Nav, Container } from 'react-bootstrap';
 
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+
+  > main {
+    flex-grow: 1;
+  }
+`;
+
 const MainNav = styled(Nav)`
   display: flex;
   align-items: center;
@@ -21,7 +31,7 @@ const MainNav = styled(Nav)`
 
 function Layout({ children }) {
   return (
-    <>
+    <Wrapper>
       <Navbar as="header">
         <Container>
           <Navbar.Brand href="https://tripsit.me/" target="_blank">TripSit</Navbar.Brand>
@@ -43,7 +53,7 @@ function Layout({ children }) {
       <main>
         {children}
       </main>
-    </>
+    </Wrapper>
   );
 }
 
