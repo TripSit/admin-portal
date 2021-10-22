@@ -13,6 +13,8 @@ module.exports = {
     'react/static-property-placement': 0,
     'react/state-in-constructor': [2, 'never'],
     'react/destructuring-assignment': 0,
+    'react/jsx-no-bind': 0,
+    'no-console': 0,
   },
   overrides: [
     {

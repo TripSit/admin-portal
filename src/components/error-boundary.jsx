@@ -19,9 +19,6 @@ const ErrorContainer = styled.div`
 export default class ErrorBoundary extends Component {
   static propTypes = {
     children: PropTypes.node.isRequired,
-    history: PropTypes.shape({
-      goBack: PropTypes.func.isRequired,
-    }).isRequired,
   };
 
   static getDerivedStateFromError() {

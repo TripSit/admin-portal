@@ -6,6 +6,7 @@ import createApolloClient from './apollo';
 import Routes from './routes';
 import Layout from './components/layout';
 import ErrorBoundary from './components/error-boundary';
+import ToastProvider from './providers/toast';
 
 const history = createBrowserHistory();
 const apolloClient = createApolloClient();
@@ -15,9 +16,11 @@ function App() {
     <Router history={history}>
       <ErrorBoundary>
         <ApolloProvider client={apolloClient}>
-          <Layout>
-            <Routes />
-          </Layout>
+          <ToastProvider>
+            <Layout>
+              <Routes />
+            </Layout>
+          </ToastProvider>
         </ApolloProvider>
       </ErrorBoundary>
     </Router>

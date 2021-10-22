@@ -19,14 +19,17 @@ function RecordsTable({
         </tr>
       </thead>
       <tbody>
-        {records.map(children)}
+        {typeof children === 'function' ? records.map(children) : children}
       </tbody>
     </Table>
   );
 }
 
 RecordsTable.propTypes = {
-  children: PropTypes.func.isRequired,
+  children: PropTypes.oneOfType([
+    PropTypes.func.isRequired,
+    PropTypes.node.isRequired
+  ]).isRequired,
   className: PropTypes.string,
   records: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
   headings: PropTypes.arrayOf(PropTypes.string.isRequired).isRequired,

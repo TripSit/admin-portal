@@ -1,12 +1,13 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { Container } from 'react-bootstrap';
+import { ToastContext } from '../../providers/toast';
 import Loading from '../../components/loading';
 import RecordsTable from '../../components/records-table';
 
 const USER_LISTING = gql`
-  query UserListing($input: UserSearchInput!) {
-    users(input: $input) {
+  query UserListing {
+    users {
       id
       nick
       email
@@ -16,9 +17,14 @@ const USER_LISTING = gql`
 `;
 
 function UserListing() {
+  const toast = useContext(ToastContext);
   const { loading, data } = useQuery(USER_LISTING, {
-    async onError(error) {
-      return error;
+    variables: {
+      input: {},
+    },
+    onError(error) {
+      console.error(error);
+      toast('Could not get users.', { variant: 'danger' });
     },
   });
 
@@ -28,24 +34,22 @@ function UserListing() {
       {loading ? (
         <Loading />
       ) : (
-        <>
-          {data.users.length ? (
-            <p>No users have been found.</p>
+        <RecordsTable
+          records={data.users}
+          headings={['Nick', 'Email', 'Joined On']}
+        >
+          {data.users.length ? user => (
+            <tr key={user.id}>
+              <th>{user.nick}</th>
+              <td>{user.email}</td>
+              <td>{user.createdAt.toLocaleString()}</td>
+            </tr>
           ) : (
-            <RecordsTable
-              records={[]}
-              headings={['Nick', 'Email', 'Joined On']}
-            >
-              {user => (
-                <tr key={user.id}>
-                  <th>{user.nick}</th>
-                  <td>{user.email}</td>
-                  <td>{user.createdAt.toLocaleString()}</td>
-                </tr>
-              )}
-            </RecordsTable>
+            <tr>
+              <td colSpan={3}>No users could be found.</td>
+            </tr>
           )}
-        </>
+        </RecordsTable>
       )}
     </Container>
   );
