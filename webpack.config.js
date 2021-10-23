@@ -58,6 +58,7 @@ const environments = {
     watchOptions: {
       ignored: ['node_modules/**'],
     },
+    devtool: 'source-map',
     devServer: {
       compress: false,
       port: 8880,

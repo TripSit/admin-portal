@@ -1,6 +1,8 @@
 import React, { useContext } from 'react';
 import { useQuery, gql } from '@apollo/client';
-import { Container } from 'react-bootstrap';
+import { Link } from 'react-router-dom';
+import { Button, Container } from 'react-bootstrap';
+import { FaPlus } from 'react-icons/fa';
 import { ToastContext } from '../../providers/toast';
 import Loading from '../../components/loading';
 import RecordsTable from '../../components/records-table';
@@ -31,6 +33,11 @@ function UserListing() {
   return (
     <Container>
       <h1>User Listing</h1>
+
+      <Button as={Link} to="/users/create" variant="success">
+        <FaPlus />
+      </Button>
+
       {loading ? (
         <Loading />
       ) : (
@@ -40,7 +47,9 @@ function UserListing() {
         >
           {data.users.length ? user => (
             <tr key={user.id}>
-              <th>{user.nick}</th>
+              <th>
+                <Link to={`/users/${user.id}`}>{user.nick}</Link>
+              </th>
               <td>{user.email}</td>
               <td>{user.createdAt.toLocaleString()}</td>
             </tr>

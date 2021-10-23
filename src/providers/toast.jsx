@@ -13,6 +13,9 @@ const ToastList = styled.ul`
   margin-top: 0;
   margin-bottom: 0;
   padding: 1.25rem;
+  &:empty {
+    display: none;
+  }
 
   li:not(:last-of-type) {
     margin-top: 0.5rem;
@@ -42,7 +45,7 @@ function ToastProvider({ children }) {
       <ToastList>
         {messages.map(message => (
           <li key={message.id}>
-            <Toast autohide onClose={() => handleClose(message.id)}>
+            <Toast autohide variant={message.variant} onClose={() => handleClose(message.id)}>
               <Toast.Header closeButton>{message.header}</Toast.Header>
               <Toast.Body>{message.text}</Toast.Body>
             </Toast>
