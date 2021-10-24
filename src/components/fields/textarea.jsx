@@ -1,9 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form } from 'react-bootstrap';
+import styled from 'styled-components';
 import Field from './field';
 
-function TextField({
+const TextArea = styled.textarea`
+  display: block;
+  width: 100%;
+  border: 1px solid #ced4da;
+  border-radius: .25em;
+  transition: box-shadow .15s ease-in-out;
+  &:focus {
+    box-shadow: 0 0 0 0.25rem rgb(13 110 253 / 25%);
+  }
+`;
+
+function TextAreaField({
   name,
   label,
   required,
@@ -11,12 +22,12 @@ function TextField({
 }) {
   return (
     <Field name={name} label={label} required={required}>
-      {field => <Form.Control {...field} {...props} />}
+      {({ value, ...field }) => <TextArea {...field} {...props}>{value}</TextArea>}
     </Field>
   );
 }
 
-TextField.propTypes = {
+TextAreaField.propTypes = {
   name: PropTypes.string.isRequired,
   label: PropTypes.string,
   disabled: PropTypes.bool,
@@ -25,7 +36,7 @@ TextField.propTypes = {
   onChange: PropTypes.func,
 };
 
-TextField.defaultProps = {
+TextAreaField.defaultProps = {
   label: null,
   disabled: false,
   required: false,
@@ -33,4 +44,4 @@ TextField.defaultProps = {
   onChange: null,
 };
 
-export default TextField;
+export default TextAreaField;

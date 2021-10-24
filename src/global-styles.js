@@ -6,4 +6,9 @@ export default createGlobalStyle`
   #root {
     min-height: 100vh;
   }
+
+  .table tbody:empty::after {
+    content: 'There are no records to display&hellip;';
+    text-align: center;
+  }
 `;

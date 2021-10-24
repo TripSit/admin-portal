@@ -5,7 +5,7 @@ import { Button, Container } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
 import { ToastContext } from '../../providers/toast';
 import Loading from '../../components/loading';
-import RecordsTable from '../../components/records-table';
+import Table from '../../components/table';
 
 const USER_LISTING = gql`
   query UserListing {
@@ -30,6 +30,14 @@ function UserListing() {
     },
   });
 
+  const res = !data ? null : {
+    ...data,
+    users: data.users.map(user => ({
+      ...user,
+      createdAt: new Date(user.createdAt),
+    })),
+  };
+
   return (
     <Container>
       <h1>User Listing</h1>
@@ -41,24 +49,27 @@ function UserListing() {
       {loading ? (
         <Loading />
       ) : (
-        <RecordsTable
-          records={data.users}
-          headings={['Nick', 'Email', 'Joined On']}
-        >
-          {data.users.length ? user => (
-            <tr key={user.id}>
-              <th>
-                <Link to={`/users/${user.id}`}>{user.nick}</Link>
-              </th>
-              <td>{user.email}</td>
-              <td>{user.createdAt.toLocaleString()}</td>
-            </tr>
-          ) : (
-            <tr>
-              <td colSpan={3}>No users could be found.</td>
-            </tr>
-          )}
-        </RecordsTable>
+        <Table
+          data={res.users}
+          columns={[
+            {
+              Header: 'Nick',
+              accessor: row => (
+                <Link to={`/users/${row.id}`}>
+                  {row.nick}
+                </Link>
+              ),
+            },
+            {
+              Header: 'Email',
+              accessor: 'email',
+            },
+            {
+              Header: 'Joined At',
+              accessor: row => row.createdAt.toLocaleDateString(),
+            },
+          ]}
+        />
       )}
     </Container>
   );

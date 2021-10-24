@@ -28,7 +28,7 @@ function Field({
 }
 
 Field.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.func.isRequired,
   className: PropTypes.string,
   name: PropTypes.string.isRequired,
   label: PropTypes.string,

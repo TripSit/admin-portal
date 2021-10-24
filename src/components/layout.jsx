@@ -2,7 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import {
+  NavDropdown,
+  Navbar,
+  Nav,
+  Container,
+} from 'react-bootstrap';
 
 const Wrapper = styled.div`
   display: flex;
@@ -42,9 +47,10 @@ function Layout({ children }) {
                 <li>
                   <Nav.Link as={Link} to="/">Dashbard</Nav.Link>
                 </li>
-                <li>
-                  <Nav.Link as={Link} to="/users">Users</Nav.Link>
-                </li>
+                <NavDropdown as="li" title="Users">
+                  <NavDropdown.Item as={Link} to="/users">Listing</NavDropdown.Item>
+                  <NavDropdown.Item as={Link} to="/roles">Roles</NavDropdown.Item>
+                </NavDropdown>
               </ul>
             </MainNav>
           </Navbar.Collapse>
