@@ -14,8 +14,8 @@ import { ToastContext } from '../../providers/toast';
 import TextField from '../../components/fields/text';
 
 const CREATE_USER = gql`
-  mutation CreateUser($input: CreateUserInput!) {
-    createUser(input: $input) {
+  mutation CreateUser($nick: String!, $password: String!, $details: CreateUserDetails) {
+    createUser(nick: $nick, password: $password, details: $details) {
       id
       nick
       email
@@ -41,21 +41,22 @@ function CreateUserPage() {
   const history = useHistory();
   const toast = useContext(ToastContext);
 
-  const [createUser] = useMutation(CREATE_USER, {
-    onSuccess() {
-      toast('User created.', { variant: 'success' });
-    },
-    onError(ex) {
-      console.error(ex);
-      toast('Could not create user.', { variant: 'danger' });
-    },
-  });
+  const [createUser] = useMutation(CREATE_USER);
 
-  async function handleSubmit({ confirmPassword, ...input }) {
+  async function handleSubmit({
+    nick,
+    password,
+    confirmPassword,
+    ...details
+  }) {
     const user = await createUser({
-      variables: { input },
+      variables: { nick, password, details },
     })
-      .then(res => res.data.createUser);
+      .then(res => res.data.createUser)
+      .catch(ex => {
+        console.error(ex);
+        toast('Could not create user.', { variant: 'danger' });
+      });
     history.push(`/users/${user.id}`);
   }
 

@@ -28,7 +28,7 @@ function RecordsTable({
 RecordsTable.propTypes = {
   children: PropTypes.oneOfType([
     PropTypes.func.isRequired,
-    PropTypes.node.isRequired
+    PropTypes.node.isRequired,
   ]).isRequired,
   className: PropTypes.string,
   records: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,

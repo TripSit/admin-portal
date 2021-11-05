@@ -22,7 +22,7 @@ function TextAreaField({
 }) {
   return (
     <Field name={name} label={label} required={required}>
-      {({ value, ...field }) => <TextArea {...field} {...props}>{value}</TextArea>}
+      {({ value, ...field }) => <TextArea {...props} {...field} defaultValue={value} />}
     </Field>
   );
 }

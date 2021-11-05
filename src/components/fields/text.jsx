@@ -11,7 +11,7 @@ function TextField({
 }) {
   return (
     <Field name={name} label={label} required={required}>
-      {field => <Form.Control {...field} {...props} />}
+      {field => <Form.Control {...props} {...field} />}
     </Field>
   );
 }

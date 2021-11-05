@@ -26,15 +26,24 @@ function SelectField({
 
 SelectField.propTypes = {
   name: PropTypes.string.isRequired,
+  options: PropTypes.arrayOf(PropTypes.shape({
+    label: PropTypes.string.isRequired,
+    value: PropTypes.oneOfType([
+      PropTypes.string.isRequired,
+      PropTypes.number.isRequired,
+    ]).isRequired,
+  })).isRequired,
   label: PropTypes.string,
   disabled: PropTypes.bool,
   required: PropTypes.bool,
+  onChange: PropTypes.func,
 };
 
 SelectField.defaultProps = {
   label: null,
   disabled: false,
   required: false,
+  onChange: null,
 };
 
 export default SelectField;

@@ -1,15 +1,23 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Table as BsTable } from 'react-bootstrap';
+import { Table as BsTable, Button } from 'react-bootstrap';
+import { FaTrash } from 'react-icons/fa';
 import { useTable } from 'react-table';
 
-function Table({ columns, data, ...props }) {
+function Table({
+  columns,
+  data,
+  onDelete,
+  ...props
+}) {
   const {
     getTableProps,
     headerGroups,
     rows,
     prepareRow,
   } = useTable({ columns, data });
+
+  const hasControls = !!onDelete;
 
   return (
     <BsTable {...props} {...getTableProps()}>
@@ -21,6 +29,7 @@ function Table({ columns, data, ...props }) {
                 {column.render('Header')}
               </th>
             ))}
+            {hasControls && <th aria-label="Controls" />}
           </tr>
         ))}
       </thead>
@@ -34,6 +43,19 @@ function Table({ columns, data, ...props }) {
                   {cell.render('Cell')}
                 </td>
               ))}
+              {hasControls && (
+                <td>
+                  {onDelete && (
+                    <Button
+                      type="button"
+                      variant="danger"
+                      onClick={() => onDelete(row.original.id)}
+                    >
+                      <FaTrash />
+                    </Button>
+                  )}
+                </td>
+              )}
             </tr>
           );
         })}
@@ -44,6 +66,7 @@ function Table({ columns, data, ...props }) {
 
 Table.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.shape({
+    id: PropTypes.string.isRequired,
     Header: PropTypes.string.isRequired,
     accessor: PropTypes.oneOfType([
       PropTypes.string.isRequired,
@@ -51,6 +74,11 @@ Table.propTypes = {
     ]).isRequired,
   }).isRequired).isRequired,
   data: PropTypes.arrayOf(PropTypes.object.isRequired).isRequired,
+  onDelete: PropTypes.func,
+};
+
+Table.defaultProps = {
+  onDelete: null,
 };
 
 export default Table;

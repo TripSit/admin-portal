@@ -13,6 +13,7 @@ const USER_LISTING = gql`
       id
       nick
       email
+      accessLevel
       createdAt
     }
   }
@@ -63,6 +64,10 @@ function UserListing() {
             {
               Header: 'Email',
               accessor: 'email',
+            },
+            {
+              Header: 'Access Level',
+              accessor: 'accessLevel',
             },
             {
               Header: 'Joined At',
