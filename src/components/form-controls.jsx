@@ -10,10 +10,8 @@ const FormControlsCol = styled(Col)`
   margin-top: 1.25rem;
 
   a,
-  button {
-    &:not(:first-child) {
-      margin-left: .5rem;
-    }
+  button:not(:first-child) {
+    margin-left: .5rem;
   }
 `;
 

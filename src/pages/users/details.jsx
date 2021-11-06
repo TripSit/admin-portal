@@ -7,6 +7,7 @@ import Loading from '../../components/loading';
 import DetailsList from '../../components/details-list';
 import UserAccessLevelField from '../../components/user/access-level-field';
 import NotesTable from '../../components/user/notes-table';
+import DiscordAccountInput from '../../components/user/discord-account-input';
 
 const USER_DETAILS = gql`
   query UserDetails($input: UserSearchInput!) {
@@ -29,7 +30,7 @@ const USER_DETAILS = gql`
         type
         expiresAt
         createdAt
-        reportedBy {
+        createdBy {
           id
           nick
         }
@@ -102,7 +103,7 @@ function UserDetailsPage() {
           <section>
             <h1 className="h2">Discord Account</h1>
             {!user.discord ? (
-              <p>No Discord account is associated with this user&hellip;</p>
+              <DiscordAccountInput userId={userId} />
             ) : (
               <DetailsList>
                 <dt>Username</dt>

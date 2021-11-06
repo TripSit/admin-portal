@@ -49,7 +49,6 @@ function Layout({ children }) {
                 </li>
                 <NavDropdown as="li" title="Users">
                   <NavDropdown.Item as={Link} to="/users">Listing</NavDropdown.Item>
-                  <NavDropdown.Item as={Link} to="/roles">Roles</NavDropdown.Item>
                 </NavDropdown>
               </ul>
             </MainNav>
