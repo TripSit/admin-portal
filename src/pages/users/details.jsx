@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import { Container, Row, Col } from 'react-bootstrap';
@@ -16,6 +16,14 @@ const USER_DETAILS = gql`
       email
       accessLevel
       createdAt
+      discord {
+        id
+        isBot
+        avatar
+        username
+        joinedAt
+        createdAt
+      }
       notes {
         id
         type
@@ -33,7 +41,6 @@ const USER_DETAILS = gql`
 function UserDetailsPage() {
   const { userId } = useParams();
   const toast = useContext(ToastContext);
-  const [isAddingNote, setIsAddingNote] = useState(false);
 
   const { loading, data } = useQuery(USER_DETAILS, {
     variables: {
@@ -48,6 +55,11 @@ function UserDetailsPage() {
   const user = !data?.users?.[0] ? null : {
     ...data.users[0],
     createdAt: new Date(data.users[0].createdAt),
+    discord: !data.users[0].discord ? null : {
+      ...data.users[0].discord,
+      joinedAt: data.users[0].discord.joinedAt && new Date(data.users[0].discord.joinedAt),
+      createdAt: new Date(data.users[0].discord.createdAt),
+    },
     notes: data.users[0].notes.map(note => ({
       ...note,
       expiresAt: note.expiresAt && new Date(note.expiresAt),
@@ -85,6 +97,24 @@ function UserDetailsPage() {
           <section>
             <h1 className="h2">Notes</h1>
             <NotesTable userId={userId} notes={user.notes} />
+          </section>
+
+          <section>
+            <h1 className="h2">Discord Account</h1>
+            {!user.discord ? (
+              <p>No Discord account is associated with this user&hellip;</p>
+            ) : (
+              <DetailsList>
+                <dt>Username</dt>
+                <dd>{user.discord.username}</dd>
+                <dt>ID</dt>
+                <dd>{user.discord.id}</dd>
+                <dt>Joined</dt>
+                <dd>{user.discord.joinedAt ? user.discord.joinedAt.toLocaleString() : 'N/A'}</dd>
+                <dt>Created</dt>
+                <dd>{user.discord.createdAt.toLocaleString()}</dd>
+              </DetailsList>
+            )}
           </section>
         </>
       )}
