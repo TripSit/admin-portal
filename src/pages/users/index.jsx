@@ -1,11 +1,11 @@
 import React, { useContext } from 'react';
 import { useQuery, gql } from '@apollo/client';
 import { Link } from 'react-router-dom';
-import { Button, Container } from 'react-bootstrap';
-import { FaPlus } from 'react-icons/fa';
+import { Container } from 'react-bootstrap';
 import { ToastContext } from '../../providers/toast';
 import Loading from '../../components/loading';
 import Table from '../../components/table';
+import AddButton from '../../components/add-button';
 
 const USER_LISTING = gql`
   query UserListing {
@@ -43,23 +43,25 @@ function UserListing() {
     <Container>
       <h1>User Listing</h1>
 
-      <Button as={Link} to="/users/create" variant="success">
-        <FaPlus />
-      </Button>
+      <AddButton href="/users/create" />
 
       {loading ? (
         <Loading />
       ) : (
         <Table
+          striped
+          bordered
           data={res.users}
           columns={[
             {
               Header: 'Nick',
-              accessor: row => (
-                <Link to={`/users/${row.id}`}>
-                  {row.nick}
-                </Link>
-              ),
+              accessor(row) {
+                return (
+                  <Link to={`/users/${row.id}`}>
+                    {row.nick}
+                  </Link>
+                );
+              },
             },
             {
               Header: 'Email',
@@ -71,7 +73,9 @@ function UserListing() {
             },
             {
               Header: 'Joined At',
-              accessor: row => row.createdAt.toLocaleDateString(),
+              accessor(row) {
+                return row.createdAt.toLocaleDateString();
+              },
             },
           ]}
         />

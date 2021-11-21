@@ -47,9 +47,12 @@ function Layout({ children }) {
                 <li>
                   <Nav.Link as={Link} to="/">Dashbard</Nav.Link>
                 </li>
-                <NavDropdown as="li" title="Users">
-                  <NavDropdown.Item as={Link} to="/users">Listing</NavDropdown.Item>
-                </NavDropdown>
+                <li>
+                  <Nav.Link as={Link} to="/drugs">Drugs</Nav.Link>
+                </li>
+                <li>
+                  <Nav.Link as={Link} to="/users">Users</Nav.Link>
+                </li>
               </ul>
             </MainNav>
           </Navbar.Collapse>

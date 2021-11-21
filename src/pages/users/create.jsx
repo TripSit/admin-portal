@@ -78,11 +78,7 @@ function CreateUserPage() {
             <Row>
 
               <Col xs={12} sm={6}>
-                <TextField
-                  name="nick"
-                  label="Nick"
-                  disabled={submitting}
-                />
+                <TextField name="nick" label="Nick" disabled={submitting} />
               </Col>
 
               <Col xs={12} sm={6}>
@@ -113,9 +109,7 @@ function CreateUserPage() {
               </Col>
 
             </Row>
-            <FormControls>
-              <Button type="submit" variant="info">Submit</Button>
-            </FormControls>
+            <FormControls />
           </Form>
         )}
       </Formik>

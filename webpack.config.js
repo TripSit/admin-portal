@@ -5,6 +5,7 @@ const { merge } = require('webpack-merge');
 const Html = require('html-webpack-plugin');
 const MiniCssExtract = require('mini-css-extract-plugin');
 const Brotli = require('brotli-webpack-plugin');
+const Dotenv = require('dotenv-webpack');
 
 const base = {
   context: path.resolve('src'),
@@ -49,6 +50,7 @@ const base = {
       inject: 'head',
     }),
     new MiniCssExtract(),
+    new Dotenv(),
   ],
 };
 
