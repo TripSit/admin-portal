@@ -29,5 +29,25 @@ module.exports = {
         strict: [2, 'global'],
       },
     },
+    {
+      files: [
+        '**/__tests__/*.test.js',
+        '**/__tests__/*.test.jsx',
+        '**/__mocks__/**/*.js',
+        '**/__mocks__/**/*.jsx',
+        'jest.setup.js',
+      ],
+      plugins: ['jest'],
+      env: {
+        jest: true,
+      },
+      settings: {
+        'import/resolver': {
+          node: {
+            paths: ['./tests'],
+          },
+        },
+      },
+    },
   ],
 };

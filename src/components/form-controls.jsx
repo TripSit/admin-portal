@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Row, Col } from 'react-bootstrap';
+import { Button, Row, Col } from 'react-bootstrap';
 
 const FormControlsCol = styled(Col)`
   display: flex;
@@ -15,16 +15,28 @@ const FormControlsCol = styled(Col)`
   }
 `;
 
-function FormControls({ children, ...props }) {
+function FormControls({ children, reset, ...props }) {
   return (
     <Row>
-      <FormControlsCol {...props}>{children}</FormControlsCol>
+      <FormControlsCol {...props}>
+        {children}
+        {reset && (
+          <Button type="reset" variant="warning">Reset</Button>
+        )}
+        <Button type="submit" variant="info">Submit</Button>
+      </FormControlsCol>
     </Row>
   );
 }
 
 FormControls.propTypes = {
-  children: PropTypes.node.isRequired,
+  children: PropTypes.node,
+  reset: PropTypes.bool,
+};
+
+FormControls.defaultProps = {
+  children: null,
+  reset: false,
 };
 
 export default FormControls;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { Table as BsTable, Button } from 'react-bootstrap';
 import { FaTrash } from 'react-icons/fa';
@@ -16,8 +16,16 @@ function Table({
     rows,
     prepareRow,
   } = useTable({ columns, data });
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const hasControls = !!onDelete;
+
+  async function handleDelete(...args) {
+    setIsDeleting(true);
+    return onDelete(...args).finally(() => {
+      setIsDeleting(false);
+    });
+  }
 
   return (
     <BsTable {...props} {...getTableProps()}>
@@ -49,7 +57,9 @@ function Table({
                     <Button
                       type="button"
                       variant="danger"
-                      onClick={() => onDelete(row.original.id)}
+                      disabled={isDeleting}
+                      aria-label="Delete"
+                      onClick={() => handleDelete(row.original.id)}
                     >
                       <FaTrash />
                     </Button>
@@ -66,7 +76,7 @@ function Table({
 
 Table.propTypes = {
   columns: PropTypes.arrayOf(PropTypes.shape({
-    id: PropTypes.string.isRequired,
+    id: PropTypes.string,
     Header: PropTypes.string.isRequired,
     accessor: PropTypes.oneOfType([
       PropTypes.string.isRequired,
