@@ -3,7 +3,7 @@
 module.exports = {
   root: true,
   extends: ['airbnb'],
-  parser: 'babel-eslint',
+  parser: '@babel/eslint-parser',
   env: { browser: true },
   rules: {
     'arrow-parens': [2, 'as-needed'],

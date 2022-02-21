@@ -12,10 +12,12 @@ export default function useNotifiedMutations(
 
   return useMutation(mutation, {
     ...options,
+
     onCompleted(...args) {
       toast(successMessage, { variant: 'success' });
       if (options.onCompleted) options.onCompleted(...args);
     },
+
     onError(ex, ...args) {
       console.error(ex);
       toast(failMessage, { variant: 'danger' });
